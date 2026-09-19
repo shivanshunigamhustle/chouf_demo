@@ -6,7 +6,8 @@ import { useChoufStore } from "@/lib/store";
 import { useT } from "@/lib/i18n/useT";
 import { Button } from "@/components/ui/Button";
 import { Label, Select, Input } from "@/components/ui/Primitives";
-import { Store, Lock, Mail, AlertCircle } from "lucide-react";
+import Link from "next/link";
+import { Store, Lock, Mail, AlertCircle, ArrowLeft } from "lucide-react";
 
 export default function MerchantLogin() {
   const router = useRouter();
@@ -38,7 +39,13 @@ export default function MerchantLogin() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-ink-50 p-6">
+    <div className="relative flex min-h-screen items-center justify-center bg-ink-50 p-6">
+      <Link
+        href="/"
+        className="absolute left-4 top-4 flex items-center gap-1.5 rounded-full border border-ink-200 bg-white px-3 py-1.5 text-xs font-semibold text-ink-600 hover:bg-ink-100"
+      >
+        <ArrowLeft className="h-4 w-4" /> Back to home
+      </Link>
       <form onSubmit={handleSubmit} className="w-full max-w-sm rounded-3xl border border-ink-200 bg-white p-7 shadow-card">
         <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-400 to-blue-600 text-white shadow-icon">
           <Store className="h-5.5 w-5.5" />

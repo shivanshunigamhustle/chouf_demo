@@ -5,7 +5,8 @@ import { useRouter } from "next/navigation";
 import { useChoufStore } from "@/lib/store";
 import { Button } from "@/components/ui/Button";
 import { Label, Input } from "@/components/ui/Primitives";
-import { ShieldCheck, Lock, Mail, AlertCircle } from "lucide-react";
+import Link from "next/link";
+import { ShieldCheck, Lock, Mail, AlertCircle, ArrowLeft } from "lucide-react";
 
 export default function AdminLogin() {
   const router = useRouter();
@@ -33,7 +34,13 @@ export default function AdminLogin() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-ink-950 p-6">
+    <div className="relative flex min-h-screen items-center justify-center bg-ink-950 p-6">
+      <Link
+        href="/"
+        className="absolute left-4 top-4 flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-semibold text-white/70 hover:bg-white/10 hover:text-white"
+      >
+        <ArrowLeft className="h-4 w-4" /> Back to home
+      </Link>
       <form onSubmit={handleSubmit} className="w-full max-w-sm rounded-3xl border border-white/10 bg-white/5 p-7 text-white">
         <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-500 to-violet-700 text-white shadow-icon">
           <ShieldCheck className="h-5.5 w-5.5" />

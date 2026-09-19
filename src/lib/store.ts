@@ -100,6 +100,7 @@ type ChoufState = {
   setMerchantOpen: (merchantId: string, open: boolean) => void;
   updateFeeTier: (tierId: string, fee: number) => void;
   togglePromoActive: (promoId: string) => void;
+  addPromo: (input: Pick<Promo, "code" | "type" | "value" | "minOrder" | "usageLimit" | "expiresAt">) => void;
   setDriverStatus: (driverId: string, status: Driver["status"]) => void;
   resolveTicket: (ticketId: string) => void;
 
@@ -431,6 +432,10 @@ export const useChoufStore = create<ChoufState>()(
         set((s) => ({ feeTiers: s.feeTiers.map((t) => (t.id === tierId ? { ...t, fee } : t)) })),
       togglePromoActive: (promoId) =>
         set((s) => ({ promos: s.promos.map((p) => (p.id === promoId ? { ...p, active: !p.active } : p)) })),
+      addPromo: (input) =>
+        set((s) => ({
+          promos: [{ ...input, id: `promo-${Date.now()}`, usageCount: 0, active: true }, ...s.promos],
+        })),
       setDriverStatus: (driverId, status) =>
         set((s) => ({ drivers: s.drivers.map((d) => (d.id === driverId ? { ...d, status } : d)) })),
       resolveTicket: (ticketId) =>
