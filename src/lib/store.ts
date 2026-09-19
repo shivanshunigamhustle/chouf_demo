@@ -56,6 +56,9 @@ type ChoufState = {
   autoPlay: boolean;
   deviceFrameVariant: "ios" | "android";
 
+  merchantSession: { merchantId: string; staffName: string } | null;
+  adminSession: { name: string; email: string; role: string } | null;
+
   // actions
   setLocale: (l: Locale) => void;
   setActiveCustomer: (id: string) => void;
@@ -64,6 +67,11 @@ type ChoufState = {
   setActiveAddress: (id: string) => void;
   setDeviceFrameVariant: (v: "ios" | "android") => void;
   toggleAutoPlay: () => void;
+
+  merchantLogin: (merchantId: string, staffName?: string) => void;
+  merchantLogout: () => void;
+  adminLogin: (email: string, name?: string) => void;
+  adminLogout: () => void;
 
   addToCart: (merchantId: string, line: CartLine) => void;
   updateCartQty: (productId: string, quantity: number) => void;
@@ -136,6 +144,8 @@ const initialState = {
   cart: { merchantId: null, lines: [] } as { merchantId: string | null; lines: CartLine[] },
   autoPlay: false,
   deviceFrameVariant: "ios" as "ios" | "android",
+  merchantSession: null as { merchantId: string; staffName: string } | null,
+  adminSession: null as { name: string; email: string; role: string } | null,
 };
 
 export const useChoufStore = create<ChoufState>()(
@@ -153,6 +163,15 @@ export const useChoufStore = create<ChoufState>()(
       setActiveAddress: (id) => set({ activeAddressId: id }),
       setDeviceFrameVariant: (v) => set({ deviceFrameVariant: v }),
       toggleAutoPlay: () => set((s) => ({ autoPlay: !s.autoPlay })),
+
+      merchantLogin: (merchantId, staffName = "Store Manager") => {
+        set({ merchantSession: { merchantId, staffName }, activeMerchantId: merchantId });
+      },
+      merchantLogout: () => set({ merchantSession: null }),
+      adminLogin: (email, name = "Admin") => {
+        set({ adminSession: { email, name, role: "super_admin" } });
+      },
+      adminLogout: () => set({ adminSession: null }),
 
       addToCart: (merchantId, line) =>
         set((s) => {
@@ -497,6 +516,8 @@ export const useChoufStore = create<ChoufState>()(
         cart: s.cart,
         autoPlay: s.autoPlay,
         deviceFrameVariant: s.deviceFrameVariant,
+        merchantSession: s.merchantSession,
+        adminSession: s.adminSession,
       }),
     }
   )

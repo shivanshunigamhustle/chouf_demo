@@ -21,6 +21,8 @@ export function DashboardShell({
   audience,
   audienceId,
   headerRight,
+  onLogout,
+  logoutHref = "/",
 }: {
   children: React.ReactNode;
   navItems: NavItem[];
@@ -29,6 +31,8 @@ export function DashboardShell({
   audience: NotificationEvent["audience"];
   audienceId?: string;
   headerRight?: React.ReactNode;
+  onLogout?: () => void;
+  logoutHref?: string;
 }) {
   const pathname = usePathname();
   const locale = useChoufStore((s) => s.locale);
@@ -73,7 +77,11 @@ export function DashboardShell({
       </nav>
       <div className="px-3 pb-5 pt-2">
         <div className="mb-2 h-px bg-white/[0.06]" />
-        <Link href="/" className="flex items-center gap-2.5 rounded-[11px] px-3 py-2.5 text-[13.5px] font-medium text-white/35 transition-colors hover:bg-white/[0.04] hover:text-white/70">
+        <Link
+          href={logoutHref}
+          onClick={() => onLogout?.()}
+          className="flex items-center gap-2.5 rounded-[11px] px-3 py-2.5 text-[13.5px] font-medium text-white/35 transition-colors hover:bg-white/[0.04] hover:text-white/70"
+        >
           <LogOut className="h-[18px] w-[18px]" strokeWidth={2.1} /> {t("common.logout")}
         </Link>
       </div>

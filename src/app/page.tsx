@@ -30,7 +30,7 @@ const PORTALS = [
     glow: "group-hover:shadow-[0_16px_40px_-16px_theme(colors.teal.400)]",
   },
   {
-    href: "/merchant/dashboard",
+    href: "/merchant/login",
     icon: Store,
     title: "Merchant dashboard",
     titleAr: "لوحة التاجر",
@@ -40,7 +40,7 @@ const PORTALS = [
     glow: "group-hover:shadow-[0_16px_40px_-16px_theme(colors.blue.400)]",
   },
   {
-    href: "/admin/dashboard",
+    href: "/admin/login",
     icon: ShieldCheck,
     title: "Admin dashboard",
     titleAr: "لوحة الإدارة",

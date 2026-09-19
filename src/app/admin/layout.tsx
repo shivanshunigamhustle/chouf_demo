@@ -1,6 +1,9 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { DashboardShell } from "@/components/layout/DashboardShell";
+import { AuthGate } from "@/components/layout/AuthGate";
+import { useChoufStore } from "@/lib/store";
 import {
   LayoutGrid,
   Receipt,
@@ -33,9 +36,24 @@ const NAV = [
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+  const adminSession = useChoufStore((s) => s.adminSession);
+  const adminLogout = useChoufStore((s) => s.adminLogout);
+
+  if (pathname === "/admin/login") return <>{children}</>;
+
   return (
-    <DashboardShell navItems={NAV} brand="Admin console" brandColor="#171b26" audience="admin">
-      {children}
-    </DashboardShell>
+    <AuthGate authed={!!adminSession} loginHref="/admin/login">
+      <DashboardShell
+        navItems={NAV}
+        brand={adminSession ? adminSession.name : "Admin console"}
+        brandColor="#171b26"
+        audience="admin"
+        onLogout={adminLogout}
+        logoutHref="/admin/login"
+      >
+        {children}
+      </DashboardShell>
+    </AuthGate>
   );
 }
